@@ -47,7 +47,7 @@ public class UserController {
 
     @PutMapping("/{userId}/role")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> updateUserRoleById(@PathVariable UUID userId, @RequestBody RoleUpdateRequest roleUpdateRequest, Authentication authentication) {
+    public ResponseEntity<UserResponse> updateUserRoleById(@PathVariable UUID userId, @Valid @RequestBody RoleUpdateRequest roleUpdateRequest, Authentication authentication) {
         String username = authentication.getName();
         UserResponse userResponse = userService.updateUserRoleById(userId, roleUpdateRequest.getRole(), username);
         return ResponseEntity.ok(userResponse);
