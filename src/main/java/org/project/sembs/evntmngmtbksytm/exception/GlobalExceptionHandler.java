@@ -1,6 +1,7 @@
 package org.project.sembs.evntmngmtbksytm.exception;
 
 import org.project.sembs.evntmngmtbksytm.dto.ErrorResponse;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -34,6 +35,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(SelfRoleUpdateToNonAdminException.class)
+    public ResponseEntity<Object> handleSelfRoleUpdate(SelfRoleUpdateToNonAdminException ex, WebRequest request) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.FORBIDDEN.value(),
+                "Forbidden",
+                ex.getMessage(),
+                request.getDescription(false).substring(4)
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     // Handles validation exceptions from @Valid

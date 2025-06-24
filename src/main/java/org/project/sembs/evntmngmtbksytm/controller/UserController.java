@@ -53,5 +53,4 @@ public class UserController {
         UserResponse userResponse = userService.updateUserRoleById(userId, role, username);
         return ResponseEntity.ok(userResponse);
     }
-
 }
