@@ -18,7 +18,7 @@ public class EnumValidatorConstraint implements ConstraintValidator<EnumValidato
                 .collect(Collectors.toSet());
     }
 
-    @Override // acual validation happens here
+    @Override // actual validation happens here
     public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
         if (value == null) {
             return false;
