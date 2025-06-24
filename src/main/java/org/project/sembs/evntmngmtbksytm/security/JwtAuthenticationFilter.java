@@ -4,7 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.project.sembs.evntmngmtbksytm.service.CustomUserDetailsService;
+import org.project.sembs.evntmngmtbksytm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private final JwtTokenProvider tokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, CustomUserDetailsService customUserDetailsService) {
+    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, UserService userService) {
         this.tokenProvider = tokenProvider;
-        this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String username = tokenProvider.getUsernameFromJWT(jwt);
 
                 // Load UserDetails (without password check as token is already validated)
-                UserDetails userDetails = customUserDetailsService.loadUserById(username);
+                UserDetails userDetails = userService.loadUserByUsername(username);
 
                 // Create Authentication object
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

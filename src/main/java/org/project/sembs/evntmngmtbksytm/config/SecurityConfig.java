@@ -2,7 +2,7 @@ package org.project.sembs.evntmngmtbksytm.config;
 
 import org.project.sembs.evntmngmtbksytm.security.JwtAuthenticationEntryPoint;
 import org.project.sembs.evntmngmtbksytm.security.JwtAuthenticationFilter;
-import org.project.sembs.evntmngmtbksytm.service.CustomUserDetailsService;
+import org.project.sembs.evntmngmtbksytm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,15 +24,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true) // To use @PreAuthorize, @PostAuthorize
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserService userService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService,
+    public SecurityConfig(UserService userService,
                           JwtAuthenticationFilter jwtAuthenticationFilter,
                           JwtAuthenticationEntryPoint unauthorizedHandler) {
-        this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.unauthorizedHandler = unauthorizedHandler;
     }

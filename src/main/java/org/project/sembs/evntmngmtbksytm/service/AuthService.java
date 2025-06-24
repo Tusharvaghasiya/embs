@@ -2,7 +2,6 @@ package org.project.sembs.evntmngmtbksytm.service;
 
 import org.project.sembs.evntmngmtbksytm.dto.UserRegistrationRequest;
 import org.project.sembs.evntmngmtbksytm.exception.UserAlreadyExistsException;
-import org.project.sembs.evntmngmtbksytm.model.Role;
 import org.project.sembs.evntmngmtbksytm.model.User;
 import org.project.sembs.evntmngmtbksytm.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
