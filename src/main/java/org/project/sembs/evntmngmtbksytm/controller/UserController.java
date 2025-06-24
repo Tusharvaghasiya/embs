@@ -1,6 +1,7 @@
 package org.project.sembs.evntmngmtbksytm.controller;
 
 import jakarta.validation.Valid;
+import org.project.sembs.evntmngmtbksytm.dto.RoleUpdateRequest;
 import org.project.sembs.evntmngmtbksytm.dto.UserResponse;
 import org.project.sembs.evntmngmtbksytm.dto.UserUpdateRequest;
 import org.project.sembs.evntmngmtbksytm.model.Role;
@@ -48,9 +49,9 @@ public class UserController {
 
     @PutMapping("/{userId}/role")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> updateUserRoleById(@PathVariable UUID userId, @RequestBody Role role, Authentication authentication) {
+    public ResponseEntity<UserResponse> updateUserRoleById(@PathVariable UUID userId, @RequestBody RoleUpdateRequest roleUpdateRequest, Authentication authentication) {
         String username = authentication.getName();
-        UserResponse userResponse = userService.updateUserRoleById(userId, role, username);
+        UserResponse userResponse = userService.updateUserRoleById(userId, roleUpdateRequest.getRole(), username);
         return ResponseEntity.ok(userResponse);
     }
 }
