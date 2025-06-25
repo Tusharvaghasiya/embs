@@ -8,6 +8,7 @@ import org.project.sembs.evntmngmtbksytm.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,18 +22,23 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createCategory(CategoryCreation category) {
+    public CategoryResponse createCategory(CategoryCreation category) {
         if (categoryRepository.existsByName(category.getName())) {
             throw new CategoryAlreadyExistsException("Category with name '" + category.getName() + "' already exists.");
         }
         Category newCategory = new Category();
         newCategory.setName(category.getName());
         newCategory.setDescription(category.getDescription());
-        return categoryRepository.save(newCategory);
+        return CategoryResponse.fromCategory(categoryRepository.save(newCategory));
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryResponse> getAllCategories() {
+        List<CategoryResponse> categoryResponseList = new LinkedList<>();
+        List<Category> categoryList = categoryRepository.findAll();
+        for (int i=0; i<categoryList.size(); i++ ) {
+            categoryResponseList.add(CategoryResponse.fromCategory(categoryList.get(0)));
+        }
+        return categoryResponseList;
     }
 
     public Optional<CategoryResponse> findCategoryById(Long id) {

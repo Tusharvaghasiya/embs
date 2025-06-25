@@ -24,13 +24,13 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Category> createCategory(@RequestBody CategoryCreation category) {
+    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryCreation category) {
         return ResponseEntity.ok(categoryService.createCategory(category));
     }
 
     // pagination to be implemented
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryResponse>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
