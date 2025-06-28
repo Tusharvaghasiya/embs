@@ -6,9 +6,10 @@ import org.project.sembs.evntmngmtbksytm.exception.CategoryAlreadyExistsExceptio
 import org.project.sembs.evntmngmtbksytm.model.Category;
 import org.project.sembs.evntmngmtbksytm.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +33,9 @@ public class CategoryService {
         return CategoryResponse.fromCategory(categoryRepository.save(newCategory));
     }
 
-    public List<CategoryResponse> getAllCategories() {
-        List<CategoryResponse> categoryResponseList = new LinkedList<>();
-        List<Category> categoryList = categoryRepository.findAll();
-        for (int i=0; i<categoryList.size(); i++ ) {
-            categoryResponseList.add(CategoryResponse.fromCategory(categoryList.get(0)));
-        }
-        return categoryResponseList;
+    public Page<CategoryResponse> getAllCategories(Pageable pagable) {
+        Page<Category> categoriesPage = categoryRepository.findAll(pagable);
+        return categoriesPage.map(CategoryResponse::fromCategory);
     }
 
     public Optional<CategoryResponse> findCategoryById(Long id) {

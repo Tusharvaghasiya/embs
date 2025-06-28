@@ -19,6 +19,7 @@ public class CategoryResponse {
     public static CategoryResponse fromCategory(Category category) {
         CategoryResponse dto = new CategoryResponse();
         dto.setId(category.getId());
+        dto.setName(category.getName());
         dto.setDesc(category.getDescription());
         dto.setCreatedAt(category.getCreatedAt());
         dto.setUpdatedAt(category.getUpdatedAt());
