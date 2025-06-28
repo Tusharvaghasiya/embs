@@ -2,9 +2,7 @@ package org.project.sembs.evntmngmtbksytm.controller;
 
 import org.project.sembs.evntmngmtbksytm.dto.CategoryCreation;
 import org.project.sembs.evntmngmtbksytm.dto.CategoryResponse;
-import org.project.sembs.evntmngmtbksytm.model.Category;
 import org.project.sembs.evntmngmtbksytm.service.CategoryService;
-import org.project.sembs.evntmngmtbksytm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,19 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("api/v1/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final UserService userService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService, UserService userService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
-        this.userService = userService;
     }
 
     @PostMapping
