@@ -5,6 +5,7 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -98,6 +99,7 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"), // FK column for Event in the join table (event_categories)
             inverseJoinColumns = @JoinColumn(name = "category_id") // FK column for Category in join table (event_categories)
     )
+    @BatchSize(size = 10)
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)

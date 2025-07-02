@@ -3,6 +3,7 @@ package org.project.sembs.evntmngmtbksytm.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -35,6 +36,7 @@ public class Category {
     private OffsetDateTime updatedAt;
 
     @ManyToMany(mappedBy = "categories")
+    @BatchSize(size = 10)
     private Set<Event> events = new HashSet<>();
 
 }

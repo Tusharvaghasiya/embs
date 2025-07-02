@@ -2,6 +2,7 @@ package org.project.sembs.evntmngmtbksytm.controller;
 
 import org.project.sembs.evntmngmtbksytm.dto.CategoryCreation;
 import org.project.sembs.evntmngmtbksytm.dto.CategoryResponse;
+import org.project.sembs.evntmngmtbksytm.dto.CategoryUpdate;
 import org.project.sembs.evntmngmtbksytm.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,10 +36,22 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable Long categoryId) {
         return categoryService.findCategoryById(categoryId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<CategoryResponse> updateCategory(@PathVariable Long categoryId, CategoryUpdate categoryUpdate) {
+        return ResponseEntity.ok(categoryService.updateCategoryById(categoryId, categoryUpdate));
+    }
+
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId) {
+        categoryService.deleteCategoryById(categoryId);
+        return ResponseEntity.noContent().build();
     }
 
 }
